@@ -17,9 +17,6 @@ authors:
   - name: Berk Geveci
     orcid: 0000-0000-0000-0000
     affiliation: 1
-  - name: Sebastien Jourdain
-    orcid: 0000-0000-0000-0000
-    affiliation: 1
   - name: Hui Wan
     orcid: 0000-0000-0000-0000
     affiliation: 2
