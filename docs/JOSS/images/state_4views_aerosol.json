@@ -1,0 +1,64 @@
+{
+  "data_file": "/Users/wanh895/Downloads/EAMv2_ne30pg2_small_aer.nc",
+  "conn_file": "/Users/wanh895/Downloads/connectivity_ne30pg2_TEMPEST.scrip.nc",
+  "tstamp": 0,
+  "midpoint": 58,
+  "interface": 0,
+  "cliplat": [-90.0, 90.0],
+  "cliplong": [-180.0, 180.0],
+  "projection": "Robinson",
+  "center": 0.0,
+  "variables": [
+    "i_vmr_dst_a3_preAerMic",
+    "i_vmr_ncl_a3_preAerMic",
+    "i_vmr_so4_a1_preAerMic",
+    "i_vmr_so4_a2_preAerMic"
+  ],
+  "varcolor": [
+    "Yellow - Gray - Blue",
+    "davos",
+    "Inferno (matplotlib)",
+    "Inferno (matplotlib)"
+  ],
+  "uselogscale": [true, true, true, true],
+  "invert": [true, false, false, false],
+  "varmin": [1e-13, 1e-10, 3e-11, 1e-12],
+  "varmax": [1e-7, 1e-8, 3e-9, 1e-9],
+  "override_range": [true, true, true, true],
+  "varaverage": [
+    1.3874049110749625e-9, 1.2428369715242548e-9, 2.0029701375338015e-10,
+    4.238328012662973e-12
+  ],
+  "use_cvd_colors": true,
+  "use_standard_colors": true,
+  "layout": [
+    {
+      "x": 0,
+      "y": 0,
+      "w": 6,
+      "h": 3,
+      "i": 0
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "w": 6,
+      "h": 3,
+      "i": 1
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "w": 6,
+      "h": 3,
+      "i": 2
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "w": 6,
+      "h": 3,
+      "i": 3
+    }
+  ]
+}
