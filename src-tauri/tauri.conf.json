@@ -30,7 +30,7 @@
       "category": "DeveloperTool",
       "copyright": "",
       "deb": {
-        "depends": []
+        "depends": ["libwebkit2gtk-4.0-37", "libgtk-3-0", "libappindicator3-1"]
       },
       "externalBin": ["sidecar/trame"],
       "icon": [
@@ -51,7 +51,7 @@
       },
       "resources": ["server"],
       "shortDescription": "",
-      "targets": ["dmg"],
+      "targets": ["dmg", "deb", "appimage"],
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
