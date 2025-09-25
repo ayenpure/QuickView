@@ -1,0 +1,117 @@
+name: "Test Linux Package"
+on:
+  workflow_dispatch:
+
+jobs:
+  test-linux-package:
+    permissions:
+      contents: write
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Verify LFS files
+        run: |
+          echo "Checking LFS files..."
+          ls -la quickview/data/
+          file quickview/data/globe.vtk
+          file quickview/data/connectivity.nc
+          echo "LFS file check complete"
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniconda-version: "latest"
+          auto-update-conda: true
+          activate-environment: quickview
+          environment-file: quickview-env.yml
+          channel-priority: strict
+
+      - name: Install Python dependencies and get version
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+          # Get version for reference
+          VERSION=$(python -c "from quickview import __version__; print(__version__)")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Found version: $VERSION"
+        shell: bash -l {0}
+
+      - name: Install system dependencies (Ubuntu)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.0-dev \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            libgtk-3-dev \
+            libayatana-appindicator3-dev \
+            libsoup2.4-dev \
+            libjavascriptcoregtk-4.0-dev \
+            build-essential \
+            curl \
+            wget \
+            file \
+            libssl-dev \
+            libgtk-3-0 \
+            libglib2.0-0 \
+            libnss3 \
+            libatk-bridge2.0-0 \
+            libdrm2 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxfixes3 \
+            libxrandr2 \
+            libgbm1 \
+            libxkbcommon0 \
+            libasound2
+
+      - name: Package using PyInstaller
+        run: |
+          chmod +x scripts/setup_tauri.sh
+          ./scripts/setup_tauri.sh
+          echo "=== Checking PyInstaller output ==="
+          ls -la src-tauri/binaries/
+          file src-tauri/binaries/quickview-*
+        shell: bash -l {0}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build Tauri application
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: test-v${{ env.VERSION }}-linux
+          releaseName: "Test Linux Build v${{ env.VERSION }}"
+          releaseBody: "Test build for Linux platform"
+          releaseDraft: true
+          prerelease: true
+
+      - name: Upload artifacts for inspection
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-build-artifacts
+          path: |
+            src-tauri/target/release/bundle/
+            src-tauri/binaries/
+          retention-days: 7
+
+      - name: Display build logs on failure
+        if: failure()
+        run: |
+          echo "=== Cargo build log ==="
+          cat src-tauri/target/release/build/*/output || true
+          echo "=== PyInstaller log ==="
+          find . -name "*.log" -type f -exec echo "File: {}" \; -exec cat {} \;
