@@ -55,9 +55,6 @@ jobs:
         run: |
           chmod +x scripts/setup_tauri.sh
           ./scripts/setup_tauri.sh
-          echo "=== Checking PyInstaller output ==="
-          ls -la src-tauri/binaries/
-          file src-tauri/binaries/quickview-*
         shell: bash -l {0}
 
       - name: Setup Node.js
