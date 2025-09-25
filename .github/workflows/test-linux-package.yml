@@ -98,16 +98,6 @@ jobs:
           releaseDraft: true
           prerelease: true
 
-      - name: Upload artifacts for inspection
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: linux-build-artifacts
-          path: |
-            src-tauri/target/release/bundle/
-            src-tauri/binaries/
-          retention-days: 7
-
       - name: Display build logs on failure
         if: failure()
         run: |
