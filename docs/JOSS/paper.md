@@ -58,57 +58,54 @@ complex set of equations and writes out results for a large number of physical
 quantities in the form of NetCDF files. After a simulation is completed and
 before more focused and detailed analyses are performed, it is often useful to
 obtain a first impression of the characteristic values of the simulated
-quantities and their geographical distributions. The tool
-[ncview](https://cirrus.ucsd.edu/ncview/) developed by [@DavidWPierce:1993] has
-been used widely in Earth system modeling communities for quick and easy,
-push-button inspections of NetCDF files. The newer tool
-[ncvis](https://github.com/SEATStandards/ncvis) developed by [@PaulUllrich:2022]
-is inspired by [ncview](https://cirrus.ucsd.edu/ncview/) but can also handle
-data on unstructured meshes.
+quantities and their geographical distributions. The atmosphere modelers' wish
+for tools that can simultaneously present multiple variables has become more
+prominent in the past years due to the rapid increase of model complexity in
+terms of the number of equations solved by the numerical models and the number
+of variables typically archived in the NetCDF files. For example, to inspect the
+simulated aerosol life cycles, it may be useful to examine the concentrations of
+multiple chemical components in different particle size ranges (see Figure 1).
 
 ![Figure 1: Aerosol concentrations simulated by EAMv2.](images/fig_EAMv2_aerosols.png)
 
-Compared to ncview and ncvis, the app presented here has the additional feature
-of simultaneously presenting multiple variables in a single viewport. The
-arrangement of the different variables in the viewport can be saved as a state
-file and reloaded into the app at a later time. The atmosphere modelers' wish
-for such features has become more prominent in the past years due to the rapid
-increase of model complexity in terms of the number of equations solved by the
-numerical models and the number of variables typically archived in the NetCDF
-files. For example, to inspect the simulated aerosol life cycles, it may be
-useful to examine the concentrations of multiple chemical components in
-different particle size ranges (see, e.g., Figure 1).
+Since the current work is focused on facilitating the development of EAM, our
+app is designed to work with the cubed sphere horizontal mesh and the
+pressure-based terrain following vertical coordinate. The adaptation of EAM
+QuickView for other models and meshes can be done by updating the ParaView
+Reader in the app.
 
-# Overall strategy
+# State of the field
 
-The creation of EAM QuickView was part of a bigger effort aimed at more
-effectively leveraging modern visual analytics tools to facilitate the
-development of EAM. The general-purpose visualization tool ParaView was chosen
-to be the engine in this effort because of ParaView's large collection of
-analysis and visualization capabilities as well as its built-in ability to
-handle big data through parallel processing. The later is imperative for global
-atmospheric models, especially in the era of high-resolution modeling.
+Several tools exist for quick visualization of NetCDF files from Earth system
+models. The tool [ncview](https://cirrus.ucsd.edu/ncview/) developed by
+[@DavidWPierce:1993] has been used widely in Earth system modeling communities
+for quick and easy, push-button inspections of NetCDF files. The newer tool
+[ncvis](https://github.com/SEATStandards/ncvis) developed by [@PaulUllrich:2022]
+is inspired by ncview but can also handle data on unstructured meshes, making it
+usable out-of-the-box for many different models and mesh types.
 
-ParaView's own UI is comprehensive, but using it requires a very steep learning
-curve. In our experience, this has resulted in many cases of frustration
-followed by disuse or rejection of the tool by users unfamiliar with the visual
-analytics language. To overcome this barrier, we decided to present a new set of
-apps to the atmospheric scientists in their own scientific language. Each of the
-apps will have a limited scope - and hence a simple and intuitive GUI - tailored
-to a single category of visualization tasks in the day-to-day work of EAM
-development. EAM QuickView is the first member of this new app family; other
+EAM QuickView was built rather than contributing to existing projects for
+several reasons. First, ncview and ncvis are designed to display one variable at
+a time, whereas EAM QuickView can simultaneously present multiple variables in a
+single viewport with drag-and-drop arrangement. Second, EAM QuickView provides
+session persistence through state files that can be saved and reloaded,
+preserving the visualization configuration for later use. Third, by building on
+ParaView's visualization engine, EAM QuickView gains access to ParaView's large
+collection of analysis capabilities and built-in ability to handle big data
+through parallel processing, which is imperative for global atmospheric models
+in the era of high-resolution modeling.
+
+# Software design
+
+EAM QuickView's design philosophy is based on presenting ParaView's powerful
+visualization capabilities to atmospheric scientists in their own scientific
+language. ParaView's own UI is comprehensive, but using it requires a steep
+learning curve that has resulted in frustration and disuse by users unfamiliar
+with the visual analytics language. To overcome this barrier, EAM QuickView
+provides a simple and intuitive GUI tailored to a single category of
+visualization tasks. It is the first member of a planned app family; other
 examples in development include quick comparison of two or more simulations as
 well as easy slicing and dicing of 3D fields using arbitrary planes and boxes.
-
-Since the current work is focused on facilitating the development of EAM, our
-app presented here is designed to work with the cubed sphere horizontal mesh and
-the pressure-based terrain following vertical coordinate. In this sense, EAM
-QuickView is an app written specifically for EAM, while the earlier tool
-[ncvis](https://github.com/SEATStandards/ncvis) can be used out-of-the-box for
-many different models and meshes. The adaptation of EAM QuickView for other
-models and meshes can be done by updating the ParaView Reader in the app.
-
-# Technical Details
 
 QuickView is built on Kitware's Trame framework [@Kitware:2024:trame] to create
 a web-based app that leverages ParaView [@Ahrens:2005; @Henderson:2007] for data
@@ -128,6 +125,24 @@ native desktop application, eliminating the need for users to install ParaView
 or configure Python environments by bundling all dependencies into a single
 executable with smaller application sizes and lower memory usage compared to
 alternatives.
+
+# Research impact statement
+
+EAM QuickView is positioned to become a key tool for the E3SM atmospheric
+modeling community. As the first member of a planned family of visualization
+apps tailored for EAM development workflows, it addresses a longstanding need
+for multi-variable inspection tools that do not require expertise in
+general-purpose visualization software. The tool is being developed in close
+collaboration with atmospheric scientists at Pacific Northwest National
+Laboratory who work on EAM development, ensuring that it meets the practical
+needs of the research community. Early adoption within the E3SM project team has
+demonstrated the utility of the multi-panel visualization and session
+persistence features for iterative model development and debugging workflows.
+
+# AI usage disclosure
+
+No generative AI tools were used in the development of this software, the
+writing of this manuscript, or the preparation of supporting materials.
 
 # Acknowledgements
 
