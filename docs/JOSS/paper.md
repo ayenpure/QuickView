@@ -56,60 +56,34 @@ in visual analytics.
 EAM, like many other simulation codes used in Earth system sciences, solves a
 complex set of equations and writes out results for a large number of physical
 quantities in the form of NetCDF files. After a simulation is completed and
-before more focused and detailed analyses are performed, it is often useful to
+before more detailed analyses are performed, it is often useful to
 obtain a first impression of the characteristic values of the simulated
 quantities and their geographical distributions. The atmosphere modelers' wish
 for tools that can simultaneously present multiple variables has become more
-prominent in the past years due to the rapid increase of model complexity in
+prominent in recent years  due to the rapid increase of model complexity in
 terms of the number of equations solved by the numerical models and the number
 of variables typically archived in the NetCDF files. For example, to inspect the
-simulated aerosol life cycles, it may be useful to examine the concentrations of
+simulated aerosol life cycles, it is very useful to examine the concentrations of
 multiple chemical components in different particle size ranges (see Figure 1).
 
 ![Figure 1: Aerosol concentrations simulated by EAMv2.](images/fig_EAMv2_aerosols.png)
 
-Since the current work is focused on facilitating the development of EAM, our
-app is designed to work with the cubed sphere horizontal mesh and the
-pressure-based terrain following vertical coordinate. The adaptation of EAM
-QuickView for other models and meshes can be done by updating the ParaView
-Reader in the app.
-
 # State of the field
 
-Several tools exist for quick visualization of NetCDF files from Earth system
-models. The tool [ncview](https://cirrus.ucsd.edu/ncview/) developed by
-[@DavidWPierce:1993] has been used widely in Earth system modeling communities
-for quick and easy, push-button inspections of NetCDF files. The newer tool
-[ncvis](https://github.com/SEATStandards/ncvis) developed by [@PaulUllrich:2022]
-is inspired by ncview but can also handle data on unstructured meshes, making it
-usable out-of-the-box for many different models and mesh types.
+Several tools exist for quick visualization of NetCDF files produced by Earth system
+models. [ncview](https://cirrus.ucsd.edu/ncview/) [@DavidWPierce:1993]
+has been widely used in Earth system modeling communities
+for rapid, push-button inspections of NetCDF files. The newer tool
+[ncvis](https://github.com/SEATStandards/ncvis) developed by [@PaulUllrich:2022] and
+inspired by ncview extends this capability to data defined on unstructured meshes, making it usable out of the box for a broad range of models and mesh types.
+While EAM QuickView is also designed for rapid inspections, it was developed to address the need to simultaneously display multiple variables in a single viewport and to support flexible rearrangement of variables during scientific reasoning. To facilitate this more sophisticated analysis workflow, QuickView also includes session persistence via state files that can be saved and reloaded, allowing users to resume analysis and achieve provenance.
 
-EAM QuickView was built rather than contributing to existing projects for
-several reasons. First, ncview and ncvis are designed to display one variable at
-a time, whereas EAM QuickView can simultaneously present multiple variables in a
-single viewport with drag-and-drop arrangement. Second, EAM QuickView provides
-session persistence through state files that can be saved and reloaded,
-preserving the visualization configuration for later use. Third, by building on
-ParaView's visualization engine, EAM QuickView gains access to ParaView's large
-collection of analysis capabilities and built-in ability to handle big data
-through parallel processing, which is imperative for global atmospheric models
-in the era of high-resolution modeling.
+To leverage state-of-the-art capabilities in visual analytics, EAM QuickView uses [ParaView](https://www.paraview.org/) [@Ahrens:2005; @Henderson:2007] as its visualization engine, thereby inheriting ParaView’s extensive collection of analysis algorithms and its built-in support for parallel processing of large data sets—capabilities that are indispensable for atmospheric models in the era of high-resolution modeling. By design, EAM QuickView departs from ParaView’s general-purpose UI which presents a steep learning curve and has repeatedly proven to be a barrier to effective use for scientists unfamiliar with the visual analytics paradigm. Instead, EAM QuickView provides a UI explicitly tailored to the scientific language and reasoning workflows of atmospheric modeling. The UI is intentionally focused on a single, well-defined task, namely rapid inspection of simulation output. In this sense, EAM QuickView represents the first prototype in a family of ParaView-based analysis UIs that is purpose-built for atmospheric applications. Additional members of this tool family currently under development target workflows such as rapid comparison of multiple simulations and flexible slicing of three-dimensional fields using arbitrary planes and bounding boxes.
 
 # Software design
 
-EAM QuickView's design philosophy is based on presenting ParaView's powerful
-visualization capabilities to atmospheric scientists in their own scientific
-language. ParaView's own UI is comprehensive, but using it requires a steep
-learning curve that has resulted in frustration and disuse by users unfamiliar
-with the visual analytics language. To overcome this barrier, EAM QuickView
-provides a simple and intuitive GUI tailored to a single category of
-visualization tasks. It is the first member of a planned app family; other
-examples in development include quick comparison of two or more simulations as
-well as easy slicing and dicing of 3D fields using arbitrary planes and boxes.
-
-QuickView is built on Kitware's Trame framework [@Kitware:2024:trame] to create
-a web-based app that leverages ParaView [@Ahrens:2005; @Henderson:2007] for data
-visualization and is distributed as a native desktop application using Tauri
+EAM QuickView is built on the [trame](https://www.kitware.com/trame/) framework [@Kitware:2024:trame]
+and is distributed as a native desktop application using Tauri
 [@Tauri:2024] via the trame-tauri library [@Kitware:2022:trame-tauri]. Trame
 enables developers to control application behavior through triggers and change
 listeners on UI elements while providing widgets that integrate with
@@ -126,23 +100,22 @@ or configure Python environments by bundling all dependencies into a single
 executable with smaller application sizes and lower memory usage compared to
 alternatives.
 
+Since the initial work was focused on facilitating the development of EAM, our
+app is designed to work with the cubed sphere horizontal mesh and the
+pressure-based terrain-following vertical coordinate. The adaptation of EAM
+QuickView for other models and meshes can be done by updating the ParaView
+Reader in the app.
+
 # Research impact statement
 
-EAM QuickView is positioned to become a key tool for the E3SM atmospheric
-modeling community. As the first member of a planned family of visualization
-apps tailored for EAM development workflows, it addresses a longstanding need
-for multi-variable inspection tools that do not require expertise in
-general-purpose visualization software. The tool is being developed in close
-collaboration with atmospheric scientists at Pacific Northwest National
-Laboratory who work on EAM development, ensuring that it meets the practical
-needs of the research community. Early adoption within the E3SM project team has
-demonstrated the utility of the multi-panel visualization and session
-persistence features for iterative model development and debugging workflows.
+Early adoption of EAM QuickView before its version 1 release has demonstrated the utility of the multi-panel visualization and session persistence features for iterative model development and debugging workflows.
+The release of EAM QuickView version 1 has triggered interests from the developers of other (e.g., land, ocean, and ice) components of the E3SM model. Work has started to generalize the app to support the meshes and file formats of these other model components.
 
 # AI usage disclosure
 
-No generative AI tools were used in the development of this software, the
-writing of this manuscript, or the preparation of supporting materials.
+No generative AI tools were used in the development of this software.
+Some of the paragraphs in this manuscript were edited by ChatGPT to improve grammar and readability;
+the text edited by ChatGPT was reviewed and further revised by the authors to ensure the adopted edits conveyed the intended messages.
 
 # Acknowledgements
 
