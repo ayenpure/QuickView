@@ -3,6 +3,9 @@
 [![Test](https://github.com/ayenpure/QuickView/actions/workflows/test.yml/badge.svg)](https://github.com/ayenpure/QuickView/actions/workflows/test.yml)
 [![Package and Release](https://github.com/ayenpure/QuickView/actions/workflows/package-and-release.yml/badge.svg)](https://github.com/ayenpure/QuickView/actions/workflows/package-and-release.yml)
 
+> **Note:** QuickView v1.0 is this repository. Development continues at
+> [Kitware/quickview](https://github.com/Kitware/quickview).
+
 **EAM QuickView** is an open-source, interactive visualization tool
 designed for scientists working with the atmospheric component of the 
 [Energy Exascale Earth System Model (E3SM)](https://e3sm.org/), 
@@ -23,6 +26,8 @@ powerful analysis and visualization capabilities, without the steep learning cur
 
 - Install and launch the app for [end users](docs/setup/for_end_users.md)
   or [app developers](docs/setup/for_app_developers.md).
+- Follow the [worked example](docs/userguide/walkthrough.md) for a first
+  analysis with public sample data.
 - Download connectivity files of EAM's cubed-sphere grids from
   [Zenodo](https://doi.org/10.5281/zenodo.16908566).
 - Optional: download [sample simulation output](https://zenodo.org/records/16922607)
@@ -39,6 +44,46 @@ powerful analysis and visualization capabilities, without the steep learning cur
 
 More detailed descriptions of how to download, install, and use QuickView
 can be found in the [documentation](https://quickview.readthedocs.io/en/latest/).
+
+## Dependencies
+
+QuickView requires Python >= 3.13 and the following packages
+(declared in `pyproject.toml` and `quickview-env.yml`):
+
+| Package | Version | Role |
+| --- | --- | --- |
+| [ParaView](https://www.paraview.org/) (includes [VTK](https://vtk.org/)) | 5.13.3 | Data reading, processing, and rendering engine |
+| [trame](https://www.kitware.com/trame/) | >= 3.6 | Python web application framework |
+| [trame-vtk](https://github.com/Kitware/trame-vtk) | >= 2.6 | Displays ParaView/VTK views in trame |
+| [trame-vuetify](https://github.com/Kitware/trame-vuetify) | >= 2.4 | UI widgets |
+| [trame-components](https://github.com/Kitware/trame-components) | >= 2.3.2 | Additional UI components |
+| [trame-grid-layout](https://github.com/Kitware/trame-grid-layout) | >= 1.0.3 | Drag-and-drop view layout |
+| [trame-tauri](https://github.com/Kitware/trame-tauri) | >= 0.6.2 | Native desktop window via [Tauri](https://tauri.app/) |
+| [pyproj](https://pyproj4.github.io/pyproj/) | >= 3.6.1 | Map projections |
+| [netCDF4](https://unidata.github.io/netcdf4-python/) | >= 1.6.5 | NetCDF file access |
+| [PyInstaller](https://pyinstaller.org/) | any | Packaging the pre-built application |
+
+Pre-built binaries for [end users](docs/setup/for_end_users.md) bundle these
+dependencies. For a developer install, see
+[the developer instructions](docs/setup/for_app_developers.md), which also
+list the recommended free disk space.
+
+## Acknowledgements
+
+QuickView is built on the work of many open-source projects. We gratefully
+acknowledge [ParaView](https://www.paraview.org/),
+[VTK](https://vtk.org/), [trame](https://www.kitware.com/trame/) and its
+widget libraries (trame-vtk, trame-vuetify, trame-components,
+trame-grid-layout, trame-tauri), [Tauri](https://tauri.app/),
+[Vuetify](https://vuetifyjs.com/), [pyproj](https://pyproj4.github.io/pyproj/),
+[netCDF4-python](https://unidata.github.io/netcdf4-python/), and the
+[E3SM](https://e3sm.org/) project for the model whose output QuickView
+visualizes.
+
+## Contributing
+
+Bug reports, feature requests, and code contributions are welcome; see
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Project Background
 
