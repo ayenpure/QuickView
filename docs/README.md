@@ -1,5 +1,12 @@
 # QuickView Homepage
 
+!!! note "Version and development status"
+
+    QuickView v1.0 is the version in the
+    [ayenpure/QuickView](https://github.com/ayenpure/QuickView) repository.
+    Development continues at
+    [github.com/Kitware/quickview](https://github.com/Kitware/quickview).
+
 
 !!! info inline end "Useful Links"
 
@@ -10,6 +17,8 @@
     - [Sample data download](https://zenodo.org/records/16922607)
     - [Repository](https://github.com/ayenpure/QuickView)
     - [Bug reports / feature requests](https://github.com/ayenpure/QuickView/issues)
+    - [Contributing](https://github.com/ayenpure/QuickView/blob/master/CONTRIBUTING.md)
+    - [Continued development (Kitware/quickview)](https://github.com/Kitware/quickview)
 
 ![EAM QuickView screenshot](images/eam_quickview_full.png){ width="62%" }
 
@@ -31,6 +40,7 @@ powerful analysis and visualization capabilities, without the steep learning cur
   or for [app developers](setup/for_app_developers.md).
 - Download [connectivity files](https://doi.org/10.5281/zenodo.16908566)
   of EAM's cubed-sphere grids from Zenodo.
+- New to QuickView? Follow the [worked example](userguide/walkthrough.md).
 - Optional: download [sample simulation output](https://zenodo.org/records/16922607)
   to test the app.
 - For EAMv2 and v3 developers and users: if your simulation data files
@@ -83,9 +93,20 @@ multivariate visualization and is currently focused on the EAM model.
 
 
 ---
-## Bug reports and feature requests
+## Bug reports, feature requests, and contributions
 
 Please use the [Issues tab on GitHub](https://github.com/ayenpure/QuickView/issues).
+Guidelines for code contributions are in
+[CONTRIBUTING.md](https://github.com/ayenpure/QuickView/blob/master/CONTRIBUTING.md).
+
+---
+## Dependencies and acknowledgements
+
+QuickView is built on [ParaView](https://www.paraview.org/) (and VTK),
+[trame](https://www.kitware.com/trame/), trame-vtk, trame-vuetify,
+trame-components, trame-grid-layout, trame-tauri, [Tauri](https://tauri.app/),
+pyproj, and netCDF4-python. The full list with versions is in the
+[README](https://github.com/ayenpure/QuickView#dependencies).
 
 ---
 ## Project Background 

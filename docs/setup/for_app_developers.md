@@ -18,15 +18,54 @@ cd QuickView
 
 ---
 
-## Install basic requirements
+## Requirements
+
+- [conda](https://docs.conda.io/) (Miniconda or Miniforge) with access to the
+  `conda-forge` channel
+- Git and [Git LFS](https://git-lfs.com/) (the bundled globe/connectivity
+  files and documentation images are stored with LFS):
+  run `git lfs install && git lfs pull` after cloning
+- Free disk space: about 2 GB for the conda environment (see below)
+
+!!! info "Disk space and memory"
+
+    - **Disk:** the conda environment created from `quickview-env.yml`
+      (Python 3.13 + ParaView 5.13.3 + their dependencies) occupied about
+      1.5 GB, and about 1.6 GB after `pip install .`
+      (measured on macOS arm64; conda package cache is additional).
+      The optional [sample data](https://zenodo.org/records/16922607) is
+      369 MB in total, and the [connectivity files](https://zenodo.org/records/16908566)
+      range from 49 kB (ne4pg2) to 2.3 GB (ne1024pg2).
+      Building the Tauri/PyInstaller application needs additional space
+      that has not been measured. <!-- TODO(author): measure -->
+    - **Memory:** <!-- TODO(author): recommended RAM per grid size
+      (e.g., ne4 / ne30 / ne120 / ne256) has not been measured. -->
+      Recommended memory has not been determined yet; it depends on the
+      grid resolution, number of variables loaded, and number of time steps.
+
+---
+
+## Install ParaView and QuickView
+
+QuickView uses the ParaView Python modules (`paraview`, `vtk`) at run time.
+The standard way to get them is from
+[conda-forge](https://conda-forge.org/); the provided environment file pins
+ParaView 5.13.3 and Python 3.13, so no separate ParaView download is needed.
 
 ```
-# Set up conda environment
+# Set up conda environment (installs python=3.13 and paraview=5.13.3)
 conda env create -f quickview-env.yml
 conda activate quickview
 
 # Install QuickView
 pip install -e .
+```
+
+To verify the installation:
+
+```
+python -c "import paraview; print(paraview.__version__)"
+python -m quickview.app --help
 ```
 
 ---

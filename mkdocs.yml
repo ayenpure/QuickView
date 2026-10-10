@@ -9,6 +9,7 @@ nav:
       - For End Users:      setup/for_end_users.md
       - For App Developers: setup/for_app_developers.md
   - User's Guide:
+      - Worked Example:     userguide/walkthrough.md
       - Key Reminders:      userguide/reminders.md
       - Connectivity Files: userguide/connectivity.md
       - Simulation Files:   userguide/data_requirements.md
