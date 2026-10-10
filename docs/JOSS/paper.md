@@ -111,7 +111,18 @@ Since the initial work was focused on facilitating the development of EAM, our
 app is designed to work with the cubed sphere horizontal mesh and the
 pressure-based terrain-following vertical coordinate. The adaptation of EAM
 QuickView for other models and meshes can be done by updating the ParaView
-Reader in the app.
+Reader in the app or by adding a new one. The data-reading step is isolated from
+the rest of the application, which operates on the datasets the reader produces
+(the multi-variable layout, session persistence and user interface). Because
+ParaView readers can be written as Python plugins, as was done for the EAM
+readers, supporting a new model or mesh primarily requires a reader that
+translates that model's NetCDF output and grid description into a ParaView
+dataset, rather than changes to the C++ code base or the user interface. We
+therefore expect that other Earth system models that write NetCDF output, such
+as the Community Earth System Model (CESM), from which E3SM originally
+descends, could be supported in this way, although this has not yet been
+demonstrated for models other than EAM and would require model-specific
+handling of grids and variable conventions.
 
 # Research impact statement
 
