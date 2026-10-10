@@ -80,6 +80,16 @@ trame-grid-layout, trame-tauri), [Tauri](https://tauri.app/),
 [E3SM](https://e3sm.org/) project for the model whose output QuickView
 visualizes.
 
+## Other Models
+
+QuickView v1.0 is built for the E3SM Atmosphere Model (EAM): its cubed-sphere
+horizontal mesh and pressure-based terrain-following vertical coordinate. Data
+reading is isolated in ParaView readers, which can be written as Python
+plugins, so supporting another Earth system model or mesh mainly means updating
+the reader or adding a new one, not changing the user interface. This has not
+yet been demonstrated for models other than EAM, and each model needs its own
+handling of grids and variable conventions.
+
 ## Contributing
 
 Bug reports, feature requests, and code contributions are welcome; see
