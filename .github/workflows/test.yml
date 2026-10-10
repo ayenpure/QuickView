@@ -32,3 +32,9 @@ jobs:
         run: |
           python -m quickview.app --help
         shell: bash -l {0}
+
+      - name: Run smoke tests
+        run: |
+          pip install pytest
+          python -m pytest tests -v
+        shell: bash -l {0}
